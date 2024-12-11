@@ -1,2 +1,4 @@
 vendor/
+phpcs.phar
+phpcbf.phar
 composer.lock
