@@ -7,10 +7,10 @@ namespace Schnell\Config;
 use Schnell\Config\Ast\AstInterface;
 use Schnell\Config\Ast\Node\NodeTypes as AstNodeTypes;
 
-use const PREG_SPLIT_NO_EMPTY;
-
 use function array_merge_recursive;
 use function preg_split;
+
+use const PREG_SPLIT_NO_EMPTY;
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>

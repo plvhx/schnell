@@ -12,15 +12,15 @@ interface NodeTypes
     /**
      * @var int
      */
-    const BLOCK = 1;
+    public const BLOCK = 1;
 
     /**
      * @var int
      */
-    const PROPERTY = 2;
+    public const PROPERTY = 2;
 
     /**
      * @var int
      */
-    const ROOT = 255;
+    public const ROOT = 255;
 }

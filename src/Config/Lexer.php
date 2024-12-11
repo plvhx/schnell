@@ -813,7 +813,9 @@ final class Lexer implements LexerInterface
         ) {
             throw new ConfigLexerException(
                 sprintf(
-                    "Line %d, column %d: integer literal must be preceded by assignment operator or must inside an array.",
+                    "Line %d, column %d: integer literal " .
+                    "must be preceded by assignment operator " .
+                    " or must inside an array.",
                     $this->getNewlines(),
                     $this->getCols() - 1
                 )
@@ -892,7 +894,9 @@ final class Lexer implements LexerInterface
         ) {
             throw new ConfigLexerException(
                 sprintf(
-                    "Line %d, column %d: string literal must be preceded by assignment operator or must inside an array.",
+                    "Line %d, column %d: string literal " .
+                    "must be preceded by assignment operator " .
+                    "or must inside an array.",
                     $this->getNewlines(),
                     $this->getCols() - 1
                 )

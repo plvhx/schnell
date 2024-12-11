@@ -12,35 +12,35 @@ interface NodeTypes
     /**
      * @var int
      */
-    const BLOCK = 1;
+    public const BLOCK = 1;
 
     /**
      * @var int
      */
-    const IDENTIFIER = 2;
+    public const IDENTIFIER = 2;
 
     /**
      * @var int
      */
-    const INTEGER = 4;
+    public const INTEGER = 4;
 
     /**
      * @var int
      */
-    const STRING = 8;
+    public const STRING = 8;
 
     /**
      * @var int
      */
-    const ASSIGN = 16;
+    public const ASSIGN = 16;
 
     /**
      * @var int
      */
-    const ARRAY = 32;
+    public const ARRAY = 32;
 
     /**
      * @var int
      */
-    const BOOLEAN = 64;
+    public const BOOLEAN = 64;
 }
