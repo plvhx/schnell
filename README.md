@@ -11,8 +11,40 @@ php -S localhost:8080 -t ./
 #### Creating a controller
 
 All declared controller must be:
+- must be under ```Schnell\Api\Controller``` controller
 - extends ```Schnell\Controller\AbstractController```
 - have ```$request```, ```$response```, and ```$args``` in route invokable method, where each of that are:
   - ```$request``` must be an instance of ```Psr\Http\Message\RequestInterface```
   - ```$response``` must be an instance of ```Psr\Http\Message\ResponseInterface```
   - ```$args``` must be an array
+- route invokable method must be annotated with ```Schnell\Attribute\Route``` class
+- route invokable method must return ```Psr\Http\Message\ResponseInterface```
+
+Below is an example:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Schnell\Api\Controller;
+
+use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+
+use Schnell\Attribute\Route;
+use Schnell\Controller\AbstractController;
+
+class FooController extends AbstractController
+{
+    #[Route('/foo', method: 'GET')]
+    public function invokeFoo(
+        Request $request,
+        Response $response,
+        array $args
+    ): ResponseInterface {
+        $response->getBody()->write('Hello, World!');
+        return $response->withHeader('Content-Type', 'text/plain');
+    }
+}
+```
