@@ -1,4 +1,8 @@
 vendor/
+var/doctrine/
+var/cache/
 phpcs.phar
 phpcbf.phar
 composer.lock
+app/Controller/UserController.php
+app/Entity/UserEntity.php
