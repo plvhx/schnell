@@ -5,4 +5,5 @@ phpcs.phar
 phpcbf.phar
 composer.lock
 app/Controller/UserController.php
-app/Entity/UserEntity.php
+app/Entity/User.php
+app/Repository/UserRepository.php
