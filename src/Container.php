@@ -15,9 +15,9 @@ use function call_user_func_array;
  */
 class Container implements ContainerInterface
 {
-	/**
-	 * @var array
-	 */
+    /**
+     * @var array
+     */
     private $instances = [];
 
     /**
@@ -30,9 +30,9 @@ class Container implements ContainerInterface
      */
     private $container;
 
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(CoreContainer $container = null)
     {
         $this->container = $container ?? new CoreContainer();
@@ -88,10 +88,11 @@ class Container implements ContainerInterface
      */
     public function get(string $id)
     {
-        if (!$this->has($id))
+        if (!$this->has($id)) {
             throw new NotFoundException(
                 sprintf("Object with identifier '%s' not found.", $id)
             );
+        }
 
         $className = isset($this->aliasMap[$id])
             ? $this->aliasMap[$id]

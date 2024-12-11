@@ -22,17 +22,18 @@ class MapperBridge extends AbstractBridge
      */
     public function load(): void
     {
-        if (false === $this->getContainer()->has(EntityManagerInterface::class))
+        if (false === $this->getContainer()->has(EntityManagerInterface::class)) {
             throw new ExtensionException(
                 sprintf(
                     "Object instance with type '%s' not found.",
                     EntityManagerInterface::class
                 )
             );
+        }
 
         $this->getContainer()->registerCallback(
             MapperInterface::class,
-            function(
+            function (
                 ContainerInterface $container,
                 ConfigInterface $config
             ): MapperInterface {

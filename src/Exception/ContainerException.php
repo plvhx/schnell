@@ -9,7 +9,6 @@ use Psr\Container\ContainerExceptionInterface;
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
-class ContainerException extends Exception
-                         implements ContainerExceptionInterface
+class ContainerException extends Exception implements ContainerExceptionInterface
 {
 }

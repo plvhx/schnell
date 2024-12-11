@@ -108,8 +108,9 @@ class Ast implements AstInterface
      */
     public function getChildAt(int $index): AstInterface|null
     {
-        if (!isset($this->childs[$index]))
+        if (!isset($this->childs[$index])) {
             return null;
+        }
 
         return $this->childs[$index];
     }
@@ -127,8 +128,9 @@ class Ast implements AstInterface
      */
     public function visit()
     {
-        if ($this->getVisitor() === null)
+        if ($this->getVisitor() === null) {
             return null;
+        }
 
         return $this->getVisitor()->resolve();
     }

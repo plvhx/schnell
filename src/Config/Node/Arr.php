@@ -9,9 +9,9 @@ namespace Schnell\Config\Node;
  */
 class Arr extends AbstractNode
 {
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public function __construct($value, int $col, int $line)
     {
         parent::__construct(NodeTypes::ARRAY, $value, $col, $line);

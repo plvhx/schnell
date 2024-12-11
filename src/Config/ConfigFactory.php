@@ -33,10 +33,11 @@ class ConfigFactory implements ConfigFactoryInterface
      */
     public function import(string $filename): void
     {
-        if (true === in_array($filename, $this->files, true))
+        if (true === in_array($filename, $this->files, true)) {
             throw new ConfigException(
                 sprintf("Config file with name '%s' exists.", $filename)
             );
+        }
 
         $this->files[] = $filename;
     }
@@ -46,8 +47,9 @@ class ConfigFactory implements ConfigFactoryInterface
      */
     public function importBulk(array $filenames): void
     {
-        foreach ($filenames as $filename)
+        foreach ($filenames as $filename) {
             $this->import($filename);
+        }
     }
 
     /**
@@ -72,10 +74,11 @@ class ConfigFactory implements ConfigFactoryInterface
         $buf = '';
 
         foreach ($this->files as $file) {
-            if (($tmp = file_get_contents($file)) === false)
+            if (($tmp = file_get_contents($file)) === false) {
                 throw new ConfigException(
                     sprintf("Read buffer from file '%s' failed.", $file)
                 );
+            }
 
             $buf .= $tmp;
         }

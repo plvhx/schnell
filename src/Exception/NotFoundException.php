@@ -10,7 +10,6 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
-class NotFoundException extends Exception
-                        implements NotFoundExceptionInterface
+class NotFoundException extends Exception implements NotFoundExceptionInterface
 {
 }

@@ -87,11 +87,12 @@ class ControllerResolver implements ControllerResolverInterface
      */
     public function resolve(ServerRequestInterface $request): void
     {
-        foreach ($this->getControllerPool()->getPool() as $key)
+        foreach ($this->getControllerPool()->getPool() as $key) {
             $this->resolveSingle(
                 $this->getControllerPool()->getPoolAt($key),
                 $request
             );
+        }
     }
 
     /**
@@ -111,7 +112,7 @@ class ControllerResolver implements ControllerResolverInterface
         array $value,
         ServerRequestInterface $request
     ): void {
-        if (!isset($value['route']) || !is_a($value['route'], Route::class))
+        if (!isset($value['route']) || !is_a($value['route'], Route::class)) {
             throw new ControllerResolverException(
                 sprintf(
                     "Route object is undefined or not an " .
@@ -119,9 +120,12 @@ class ControllerResolver implements ControllerResolverInterface
                     Route::class
                 )
             );
+        }
 
-        if (!isset($value['controller']) ||
-            !is_a($value['controller'], ControllerInterface::class))
+        if (
+            !isset($value['controller']) ||
+            !is_a($value['controller'], ControllerInterface::class)
+        ) {
             throw new ControllerResolverException(
                 sprintf(
                     "Controller object is undefined or not an " .
@@ -129,6 +133,7 @@ class ControllerResolver implements ControllerResolverInterface
                     ControllerInterface::class
                 )
             );
+        }
 
         $this->getRouteCollectorProxy()->map(
             is_array($value['route']->getMethod())

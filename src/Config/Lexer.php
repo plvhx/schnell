@@ -500,14 +500,15 @@ final class Lexer implements LexerInterface
      */
     private function processWhenEof(): void
     {
-        if ($this->getScoped() || $this->getArrayScoped())
+        if ($this->getScoped() || $this->getArrayScoped()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: unterminated block identifier",
-                    self.getNewlines(),
-                    self.getCols() - 1
+                    self . getNewlines(),
+                    self . getCols() - 1
                 )
             );
+        }
     }
 
     /**
@@ -516,8 +517,9 @@ final class Lexer implements LexerInterface
     private function processCline(): void
     {
         while (true) {
-            if ($this->isEof())
+            if ($this->isEof()) {
                 break;
+            }
 
             if ($this->isNewline()) {
                 $this->persist();
@@ -528,8 +530,9 @@ final class Lexer implements LexerInterface
             $this->next();
         }
 
-        if ($this->isNewline())
+        if ($this->isNewline()) {
             $this->processNewline();
+        }
     }
 
     /**
@@ -546,8 +549,10 @@ final class Lexer implements LexerInterface
      */
     private function processAssignment(): void
     {
-        if (count($this->tokens) == 0 ||
-            $this->getLastNode()->getType() !== NodeTypes::IDENTIFIER)
+        if (
+            count($this->tokens) == 0 ||
+            $this->getLastNode()->getType() !== NodeTypes::IDENTIFIER
+        ) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: assignment operator must be " .
@@ -556,6 +561,7 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $node = new Assign(
             $this->current(),
@@ -571,8 +577,10 @@ final class Lexer implements LexerInterface
      */
     private function processArrayOrBlock(): void
     {
-        if (sizeof($this->tokens) != 0 &&
-            $this->getLastNode()->getType() == NodeTypes::ASSIGN) {
+        if (
+            sizeof($this->tokens) != 0 &&
+            $this->getLastNode()->getType() == NodeTypes::ASSIGN
+        ) {
             $this->processArray();
             return;
         }
@@ -585,7 +593,7 @@ final class Lexer implements LexerInterface
      */
     private function processArray(): void
     {
-        if ($this->isEof())
+        if ($this->isEof()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: unterminated array block identifier.",
@@ -593,6 +601,7 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $this->incrementCols();
         $this->setArrayScoped(true);
@@ -618,7 +627,7 @@ final class Lexer implements LexerInterface
 
         while (!$this->isCsb() && !$this->isEof()) {
             if ($this->isComma() || $this->isWhitespace()) {
-                if ($this->isComma() && $commas > 0)
+                if ($this->isComma() && $commas > 0) {
                     throw new ConfigLexerException(
                         sprintf(
                             "Line %d, column %d: consecutive comma is not allowed.",
@@ -626,9 +635,11 @@ final class Lexer implements LexerInterface
                             $this->getCols() - 1
                         )
                     );
+                }
 
-                if ($this->isComma() && $commas == 0)
+                if ($this->isComma() && $commas == 0) {
                     $commas++;
+                }
 
                 $this->persist();
                 $this->next();
@@ -637,7 +648,7 @@ final class Lexer implements LexerInterface
                 continue;
             }
 
-            if ($this->isValidIdentAndBlockAlpha())
+            if ($this->isValidIdentAndBlockAlpha()) {
                 throw new ConfigLexerException(
                     sprintf(
                         "Line %d, column %d: array literal must not contain identifier.",
@@ -645,10 +656,12 @@ final class Lexer implements LexerInterface
                         $this->getCols() - 1
                     )
                 );
+            }
 
             if ($this->isSquote() || $this->isDquote()) {
-                if (!$skipped)
+                if (!$skipped) {
                     $this->next();
+                }
 
                 $res[]  = $this->processStringGeneric();
                 $commas = $commas > 0 ? $commas - 1 : $commas;
@@ -656,8 +669,9 @@ final class Lexer implements LexerInterface
             }
 
             if ($this->isDigits()) {
-                if (!$skipped)
+                if (!$skipped) {
                     $this->next();
+                }
 
                 $res[]  = $this->processIntegerGeneric();
                 $commas = $commas > 0 ? $commas - 1 : $commas;
@@ -668,11 +682,12 @@ final class Lexer implements LexerInterface
 
             $this->persist();
 
-            if ($this->peek(1) !== ',')
+            if ($this->peek(1) !== ',') {
                 $this->next();
+            }
         }
 
-        if (!$this->isCsb())
+        if (!$this->isCsb()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: unterminated array literal.",
@@ -680,8 +695,9 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
-        if ($commas > 0)
+        if ($commas > 0) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: trailing comma before closing square brace is not allowed.",
@@ -689,6 +705,7 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $this->setArrayScoped(false);
         $this->next();
@@ -707,7 +724,7 @@ final class Lexer implements LexerInterface
      */
     private function processBlock(): void
     {
-        if ($this->isEof())
+        if ($this->isEof()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: unterminated block identifier.",
@@ -715,13 +732,14 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $this->incrementCols();
         $this->setScoped(true);
         $this->incrementScopeCount();
         $this->persist();
 
-        if ($this->isDigits())
+        if ($this->isDigits()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: block identifier cannot started with digit.",
@@ -729,8 +747,9 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
-        if (!$this->isValidIdentAndBlockCompl())
+        if (!$this->isValidIdentAndBlockCompl()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: block identifier contains invalid character (%s)",
@@ -739,20 +758,23 @@ final class Lexer implements LexerInterface
                     $this->current()
                 )
             );
+        }
 
         $res = $this->current();
 
         $this->next();
 
         while (true) {
-            if ($this->isEof())
+            if ($this->isEof()) {
                 break;
+            }
 
             $this->incrementCols();
             $this->persist();
 
-            if (!$this->isValidIdentAndBlockCompl())
+            if (!$this->isValidIdentAndBlockCompl()) {
                 break;
+            }
 
             $res .= $this->current();
             $this->next();
@@ -774,8 +796,9 @@ final class Lexer implements LexerInterface
     {
         $this->decrementScopeCount();
 
-        if ($this->getScopeCount() == 0)
+        if ($this->getScopeCount() == 0) {
             $this->setScoped(false);
+        }
     }
 
     /**
@@ -783,9 +806,11 @@ final class Lexer implements LexerInterface
      */
     private function processIntegerGeneric(): int
     {
-        if (sizeof($this->tokens) == 0 ||
+        if (
+            sizeof($this->tokens) == 0 ||
             $this->getLastNode()->getType() !== NodeTypes::ASSIGN &&
-            !$this->getArrayScoped())
+            !$this->getArrayScoped()
+        ) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: integer literal must be preceded by assignment operator or must inside an array.",
@@ -793,25 +818,31 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $res = $this->current();
 
-        if ($this->isEof())
+        if ($this->isEof()) {
             return intval($res);
+        }
 
         while (true) {
-            if ($this->isEof())
+            if ($this->isEof()) {
                 break;
+            }
 
             $this->incrementCols();
             $this->persist();
 
-            if ($this->isNewline() ||
+            if (
+                $this->isNewline() ||
                 ($this->isCsb() && $this->getArrayScoped()) ||
-                ($this->isComma() && $this->getArrayScoped()))
+                ($this->isComma() && $this->getArrayScoped())
+            ) {
                 break;
+            }
 
-            if (!$this->isNewline() && !$this->isDigits())
+            if (!$this->isNewline() && !$this->isDigits()) {
                 throw new ConfigLexerException(
                     sprintf(
                         "Line %d, column %d: integer literal must composed by digits (got: %s).",
@@ -820,6 +851,7 @@ final class Lexer implements LexerInterface
                         $this->current()
                     )
                 );
+            }
 
             $res .= $this->current();
             $this->next();
@@ -853,9 +885,11 @@ final class Lexer implements LexerInterface
      */
     private function processStringGeneric(): string
     {
-        if (sizeof($this->tokens) == 0 ||
+        if (
+            sizeof($this->tokens) == 0 ||
             $this->getLastNode()->getType() != NodeTypes::ASSIGN &&
-            !$this->getArrayScoped())
+            !$this->getArrayScoped()
+        ) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: string literal must be preceded by assignment operator or must inside an array.",
@@ -863,8 +897,9 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
-        if ($this->isEof())
+        if ($this->isEof()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: unterminated string literal.",
@@ -872,6 +907,7 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $this->incrementCols();
         $this->setStrstart($this->current());
@@ -887,14 +923,17 @@ final class Lexer implements LexerInterface
         $this->next();
 
         while (true) {
-            if ($this->isEof())
+            if ($this->isEof()) {
                 break;
+            }
 
             $this->incrementCols();
             $this->persist();
 
-            if (($this->isNewline() || $this->isComma()) &&
-                $this->backtrack(1) !== self.getStrstart())
+            if (
+                ($this->isNewline() || $this->isComma()) &&
+                $this->backtrack(1) !== self . getStrstart()
+            ) {
                 throw new ConfigLexerException(
                     sprintf(
                         "Line %d, column %d: unterminated string literal.",
@@ -902,16 +941,20 @@ final class Lexer implements LexerInterface
                         $this->getCols() - 1
                     )
                 );
+            }
 
-            if ($this->current() === $this->getStrstart() &&
-                $this->backtrack(1) !== "\\")
+            if (
+                $this->current() === $this->getStrstart() &&
+                $this->backtrack(1) !== "\\"
+            ) {
                 break;
+            }
 
             $buf .= $this->current();
             $this->next();
         }
 
-        if ($this->current() !== $this->getStrstart())
+        if ($this->current() !== $this->getStrstart()) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: unterminated string literal.",
@@ -919,10 +962,13 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
-        if ($this->peek(1) !== ',' &&
+        if (
+            $this->peek(1) !== ',' &&
             $this->peek(1) !== ']' &&
-            $this->getArrayScoped())
+            $this->getArrayScoped()
+        ) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: every array elements must be " .
@@ -931,6 +977,7 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
         $this->next();
         $this->setStrstart(null);
@@ -961,13 +1008,15 @@ final class Lexer implements LexerInterface
      */
     private function processIdentifier(): void
     {
-        if (sizeof($this->tokens) === 0 ||
+        if (
+            sizeof($this->tokens) === 0 ||
             ($this->getLastNode()->getType() !== NodeTypes::BLOCK &&
              $this->getLastNode()->getType() !== NodeTypes::BOOLEAN &&
              $this->getLastNode()->getType() !== NodeTypes::STRING &&
              $this->getLastNode()->getType() !== NodeTypes::INTEGER &&
              $this->getLastNode()->getType() !== NodeTypes::ARRAY &&
-             $this->getLastNode()->getType() !== NodeTypes::ASSIGN))
+             $this->getLastNode()->getType() !== NodeTypes::ASSIGN)
+        ) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: identifier must be preceded by " .
@@ -977,28 +1026,34 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
-        if ($this->isEof())
+        if ($this->isEof()) {
             return;
+        }
 
         $buf = $this->current();
 
         while (true) {
-            if ($this->isEof())
+            if ($this->isEof()) {
                 break;
+            }
 
             $this->incrementCols();
             $this->persist();
 
-            if (!$this->isValidIdentAndBlockCompl())
+            if (!$this->isValidIdentAndBlockCompl()) {
                 break;
+            }
 
             $buf .= $this->current();
             $this->next();
         }
 
-        if ($this->getLastNode()->getType() === NodeTypes::ASSIGN &&
-            ($buf !== 'true' && $buf !== 'false'))
+        if (
+            $this->getLastNode()->getType() === NodeTypes::ASSIGN &&
+            ($buf !== 'true' && $buf !== 'false')
+        ) {
             throw new ConfigLexerException(
                 sprintf(
                     "Line %d, column %d: only boolean types that can " .
@@ -1007,9 +1062,12 @@ final class Lexer implements LexerInterface
                     $this->getCols() - 1
                 )
             );
+        }
 
-        if ($this->getLastNode()->getType() === NodeTypes::ASSIGN &&
-            ($buf === 'true' || $buf === 'false')) {
+        if (
+            $this->getLastNode()->getType() === NodeTypes::ASSIGN &&
+            ($buf === 'true' || $buf === 'false')
+        ) {
             $node = new Boolean(
                 $buf === 'true' ? true : false,
                 $this->getCols(),
@@ -1146,8 +1204,9 @@ final class Lexer implements LexerInterface
      */
     private function peek(int $depth): string|null
     {
-        if ($this->getPosition() + $depth >= strlen($this->getBuffer()))
+        if ($this->getPosition() + $depth >= strlen($this->getBuffer())) {
             return null;
+        }
 
         return $this->buffer[$this->getPosition() + $depth];
     }
@@ -1157,8 +1216,9 @@ final class Lexer implements LexerInterface
      */
     private function backtrack(int $depth): string|null
     {
-        if ($this->getPosition() - $depth < 0)
+        if ($this->getPosition() - $depth < 0) {
             return null;
+        }
 
         return $this->buffer[$this->getPosition() - $depth];
     }
@@ -1176,8 +1236,9 @@ final class Lexer implements LexerInterface
      */
     private function persist(): void
     {
-        if ($this->isEof())
+        if ($this->isEof()) {
             return;
+        }
 
         $this->setToken($this->buffer[$this->getPosition()]);
     }
@@ -1207,8 +1268,9 @@ final class Lexer implements LexerInterface
      */
     private function isValidIdentAndBlockCompl(): bool
     {
-        if ($this->current() === null)
+        if ($this->current() === null) {
             return false;
+        }
 
         return ctype_alnum($this->current()) ||
                $this->current() === '-' ||
@@ -1220,8 +1282,9 @@ final class Lexer implements LexerInterface
      */
     private function isAssignment(): bool
     {
-        if ($this->current() === null)
+        if ($this->current() === null) {
             return false;
+        }
 
         return $this->current() === '=';
     }

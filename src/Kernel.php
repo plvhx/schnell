@@ -128,7 +128,8 @@ final class Kernel implements KernelInterface
      */
     public function load(): void
     {
-        foreach ($this->extensions as $extension)
+        foreach ($this->extensions as $extension) {
             $extension->load();
+        }
     }
 }

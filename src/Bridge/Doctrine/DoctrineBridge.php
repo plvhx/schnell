@@ -29,7 +29,7 @@ class DoctrineBridge extends AbstractBridge
     {
         $this->getContainer()->registerCallback(
             EntityManagerInterface::class,
-            function(
+            function (
                 ContainerInterface $container,
                 ConfigInterface $config
             ): EntityManagerInterface {
@@ -44,9 +44,9 @@ class DoctrineBridge extends AbstractBridge
                     ? new ArrayAdapter()
                     : new FilesystemAdapter(
                         directory: $cacheDir
-                      );
+                    );
 
-                $metadataFn = function(string $path): string {
+                $metadataFn = function (string $path): string {
                     return sprintf(
                         "%s%s%s",
                         $this->getBasePath(),

@@ -8,15 +8,12 @@ use Schnell\Config\Ast\Ast;
 use Schnell\Config\Ast\AstInterface;
 use Schnell\Config\Node\NodeInterface;
 use Schnell\Config\Node\NodeTypes;
-
 use Schnell\Config\Ast\Node\Block as AstBlockNode;
 use Schnell\Config\Ast\Node\Property as AstPropertyNode;
 use Schnell\Config\Ast\Node\Root as AstRootNode;
 use Schnell\Config\Ast\Node\NodeTypes as AstNodeTypes;
-
 use Schnell\Config\Ast\Visitor\Block as AstBlockVisitor;
 use Schnell\Config\Ast\Visitor\Property as AstPropertyVisitor;
-
 use Schnell\Exception\ConfigParserException;
 
 /**
@@ -90,8 +87,9 @@ final class Parser implements ParserInterface
      */
     public function getTokensAt(int $index): NodeInterface|null
     {
-        if (!isset($this->tokens[$index]))
+        if (!isset($this->tokens[$index])) {
             return null;
+        }
 
         return $this->tokens[$index];
     }
@@ -184,8 +182,9 @@ final class Parser implements ParserInterface
     public function parse(): void
     {
         while (true) {
-            if ($this->isEot())
+            if ($this->isEot()) {
                 break;
+            }
 
             if ($this->isBlock()) {
                 $this->processBlock();
@@ -287,10 +286,12 @@ final class Parser implements ParserInterface
 
         $this->persist();
 
-        if ($this->current()->getType() !== NodeTypes::BOOLEAN &&
+        if (
+            $this->current()->getType() !== NodeTypes::BOOLEAN &&
             $this->current()->getType() !== NodeTypes::INTEGER &&
             $this->current()->getType() !== NodeTypes::STRING &&
-            $this->current()->getType() !== NodeTypes::ARRAY) {
+            $this->current()->getType() !== NodeTypes::ARRAY
+        ) {
             throw new ConfigParserException(
                 sprintf(
                     "Line %d, column %d: assignment operator must be " .
@@ -351,8 +352,9 @@ final class Parser implements ParserInterface
      */
     private function peek(int $depth): NodeInterface|null
     {
-        if ($this->getPosition() + $depth >= sizeof($this->getTokens()))
+        if ($this->getPosition() + $depth >= sizeof($this->getTokens())) {
             return null;
+        }
 
         return $this->getTokensAt($this->getPosition() + $depth);
     }
@@ -363,8 +365,9 @@ final class Parser implements ParserInterface
      */
     private function revert(int $depth): NodeInterface|null
     {
-        if ($this->getPosition() - $depth < 0)
+        if ($this->getPosition() - $depth < 0) {
             return null;
+        }
 
         return $this->getTokensAt(this->getPosition() - $depth);
     }
@@ -374,8 +377,9 @@ final class Parser implements ParserInterface
      */
     private function isBlock(): bool
     {
-        if ($this->current() === null)
+        if ($this->current() === null) {
             return false;
+        }
 
         return $this->current()->getType() === NodeTypes::BLOCK;
     }
@@ -385,8 +389,9 @@ final class Parser implements ParserInterface
      */
     private function isIdentifier(): bool
     {
-        if ($this->current() === null)
+        if ($this->current() === null) {
             return false;
+        }
 
         return $this->current()->getType() === NodeTypes::IDENTIFIER;
     }

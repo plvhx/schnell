@@ -126,8 +126,9 @@ final class Config implements ConfigInterface
         $map = $this->getMap();
 
         foreach ($names as $key => $name) {
-            if (!isset($map[$name]))
+            if (!isset($map[$name])) {
                 return null;
+            }
 
             $map = $map[$name];
         }
@@ -141,8 +142,9 @@ final class Config implements ConfigInterface
      */
     private function getMapAt(string $key)
     {
-        if (!isset($this->map[$key]))
+        if (!isset($this->map[$key])) {
             return null;
+        }
 
         return $this->map[$key];
     }
@@ -166,8 +168,9 @@ final class Config implements ConfigInterface
             ->getValue()
             ->getType();
 
-        if ($type === AstNodeTypes::ROOT)
+        if ($type === AstNodeTypes::ROOT) {
             $this->traverseAstChilds($this->getAst()->getChilds());
+        }
 
         $this->setKey(null);
     }

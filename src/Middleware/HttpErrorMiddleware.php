@@ -66,7 +66,8 @@ class HttpErrorMiddleware implements MiddlewareInterface
      * @param Throwable $e
      * @return Psr\Http\Message\ResponseInterface
      */
-    private function handleHttpNotFound(Throwable $e): ResponseInterface {
+    private function handleHttpNotFound(Throwable $e): ResponseInterface
+    {
         $response = new Response();
         $responseData = [
             'code' => $e->getCode(),
@@ -79,6 +80,6 @@ class HttpErrorMiddleware implements MiddlewareInterface
 
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus($e->getCode(), $e->getMessage()); 
+            ->withStatus($e->getCode(), $e->getMessage());
     }
 }

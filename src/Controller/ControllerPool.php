@@ -129,18 +129,20 @@ class ControllerPool implements ControllerPoolInterface
 
         $controllerFiles = glob($globPattern);
 
-        if (false === $controllerFiles)
+        if (false === $controllerFiles) {
             return;
+        }
 
-        $controllerClassFn = function(string $el) {
+        $controllerClassFn = function (string $el) {
             $ret = preg_match(
                 '/(.*)(?:.php)/',
                 basename($el),
                 $matches
             );
 
-            if (false === $ret)
+            if (false === $ret) {
                 return [];
+            }
 
             return sprintf(
                 "%s\\%s",
@@ -151,8 +153,9 @@ class ControllerPool implements ControllerPoolInterface
 
         $controllerClasses = array_map($controllerClassFn, $controllerFiles);
 
-        foreach ($controllerClasses as $controllerClass)
+        foreach ($controllerClasses as $controllerClass) {
             $this->resolveControllerClass($controllerClass);
+        }
     }
 
     /**
@@ -165,16 +168,18 @@ class ControllerPool implements ControllerPoolInterface
         $ctrlInstance = $reflection->newInstance($this->getContainer());
         $classMethods = $reflection->getMethods();
 
-        if (sizeof($classMethods) === 0)
+        if (sizeof($classMethods) === 0) {
             return;
+        }
 
         $routeAttr = null;
 
         foreach ($classMethods as $classMethod) {
             $attributes = $classMethod->getAttributes();
 
-            if (sizeof($attributes) === 0)
+            if (sizeof($attributes) === 0) {
                 continue;
+            }
 
             $attrObjs = [
                 'controller' => $ctrlInstance,
