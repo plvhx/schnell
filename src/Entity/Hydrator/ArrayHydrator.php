@@ -18,8 +18,9 @@ class ArrayHydrator implements HydratorInterface
     {
         $ret = [];
 
-        foreach ($value as $data)
+        foreach ($value as $data) {
             $ret[] = $this->hydrateSingle($data);
+        }
 
         return $ret;
     }
@@ -30,7 +31,7 @@ class ArrayHydrator implements HydratorInterface
      */
     private function hydrateSingle(EntityInterface $entity): array
     {
-    	$hydrated = [];
+        $hydrated = [];
         $reflection = new ReflectionClass($entity);
         $fields = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
 
