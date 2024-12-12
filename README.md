@@ -1,6 +1,6 @@
 ### Schnell
 
-Schnell (meaning 'fast' in German) is the PHP micro framework that use most of the Slim framework components.
+Schnell (meaning 'fast' in German) is the PHP micro framework that use most of the Slim framework components and Doctrine ORM as the default persistence manager.
 
 #### Run locally
 
