@@ -96,3 +96,17 @@ class User extends AbstractEntity
     }
 }
 ```
+
+#### Persisting that table metadata into database
+
+```bash
+cd bin
+./doctrine orm:schema-tool:create
+```
+
+#### Removing synced table metadata from database
+
+```bash
+cd bin
+./doctrine orm:schema-tool:drop --force
+```
