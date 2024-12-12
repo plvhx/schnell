@@ -7,7 +7,7 @@ namespace Schnell\Mapper;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\RequestInterface;
-use Schnell\Entity\Hydrator\HydratorInterface;
+use Schnell\Hydrator\HydratorInterface;
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -65,18 +65,18 @@ interface MapperInterface
     public function runDql();
 
     /**
-     * @return Schnell\Entity\Hydrator\HydratorInterface
+     * @return Schnell\Hydrator\HydratorInterface
      */
     public function getHydrator(): HydratorInterface;
 
     /**
-     * @param Schnell\Entity\Hydrator\HydratorInterface $hydrator
+     * @param Schnell\Hydrator\HydratorInterface $hydrator
      * @return void
      */
     public function setHydrator(HydratorInterface $hydrator): void;
 
     /**
-     * @param Schnell\Entity\Hydrator\HydratorInterface $hydrator
+     * @param Schnell\Hydrator\HydratorInterface $hydrator
      * @return Schnell\Mapper\MapperInterface
      */
     public function withHydrator(HydratorInterface $hydrator): MapperInterface;
