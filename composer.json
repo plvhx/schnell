@@ -13,6 +13,7 @@
     },
     "license": "BSD-3-Clause",
     "autoload": {
+        "files": ["functions/error.php"],
         "psr-4": {
             "Schnell\\": "src/",
             "Schnell\\Api\\": "app/"
