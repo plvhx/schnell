@@ -15,7 +15,21 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 use function array_map;
+use function class_exists;
 use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(DriverManager::class);
+class_exists(EntityManager::class);
+class_exists(EntityManagerInterface::class);
+class_exists(ORMSetup::class);
+class_exists(ContainerInterface::class);
+class_exists(AbstractBridge::class);
+class_exists(ConfigInterface::class);
+class_exists(ArrayAdapter::class);
+class_exists(FilesystemAdapter::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
