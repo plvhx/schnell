@@ -398,7 +398,7 @@ final class Lexer implements LexerInterface
      */
     public function setReservedKeywords(array $keywords): void
     {
-        $this->keywords = $keywords;
+        $this->reservedKeywords = $keywords;
     }
 
     /**
