@@ -16,6 +16,23 @@ use Schnell\Config\Ast\Visitor\Block as AstBlockVisitor;
 use Schnell\Config\Ast\Visitor\Property as AstPropertyVisitor;
 use Schnell\Exception\ConfigParserException;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Ast::class);
+class_exists(AstInterface::class);
+class_exists(NodeInterface::class);
+class_exists(NodeTypes::class);
+class_exists(AstBlockNode::class);
+class_exists(AstPropertyNode::class);
+class_exists(AstRootNode::class);
+class_exists(AstNodeTypes::class);
+class_exists(AstBlockVisitor::class);
+class_exists(AstPropertyVisitor::class);
+class_exists(ConfigParserException::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
