@@ -12,7 +12,19 @@ use Schnell\Controller\ControllerPoolInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Response;
 
+use function class_exists;
 use function json_encode;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Throwable::class);
+class_exists(ResponseInterface::class);
+class_exists(ServerRequestInterface::class);
+class_exists(RequestHandlerInterface::class);
+class_exists(ControllerPoolInterface::class);
+class_exists(HttpNotFoundException::class);
+class_exists(Response::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>

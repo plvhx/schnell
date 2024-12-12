@@ -7,6 +7,14 @@ namespace Schnell\Middleware;
 use Schnell\Controller\ControllerPoolInterface;
 use Psr\Http\Server\MiddlewareInterface as PsrMiddlewareInterface;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(ControllerPoolInterface::class);
+class_exists(PsrMiddlewareInterface::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */

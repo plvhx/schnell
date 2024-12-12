@@ -9,6 +9,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\RequestInterface;
 use Schnell\Hydrator\HydratorInterface;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(AbstractQuery::class);
+class_exists(EntityManagerInterface::class);
+class_exists(RequestInterface::class);
+class_exists(HydratorInterface::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */

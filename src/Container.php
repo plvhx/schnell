@@ -8,7 +8,14 @@ use DI\Container as CoreContainer;
 use Schnell\Exception\NotFoundException;
 
 use function array_key_exists;
+use function class_exists;
 use function call_user_func_array;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(CoreContainer::class);
+class_exists(NotFoundException::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>

@@ -6,8 +6,16 @@ use ReflectionClass;
 use ReflectionProperty;
 use Schnell\Entity\EntityInterface;
 
+use function class_exists;
 use function sprintf;
 use function ucfirst;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(ReflectionClass::class);
+class_exists(ReflectionProperty::class);
+class_exists(EntityInterface::class);
+// phpcs:enable
 
 class ArrayHydrator implements HydratorInterface
 {
