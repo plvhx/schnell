@@ -6,6 +6,13 @@ namespace Schnell\Config;
 
 use Schnell\Config\Node\NodeInterface;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(NodeInterface::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
