@@ -10,6 +10,17 @@ use Schnell\Config\ConfigInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(SplObjectStorage::class);
+class_exists(Container::class);
+class_exists(ConfigInterface::class);
+class_exists(RequestInterface::class);
+class_exists(ResponseInterface::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
