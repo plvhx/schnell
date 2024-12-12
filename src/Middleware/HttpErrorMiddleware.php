@@ -12,6 +12,8 @@ use Schnell\Controller\ControllerPoolInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Response;
 
+use function json_encode;
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
@@ -58,7 +60,9 @@ class HttpErrorMiddleware implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (Throwable $e) {
-            return $this->handleHttpNotFound($e);
+            return $e instanceof HttpNotFoundException
+                ? $this->handleHttpNotFound($e)
+                : $this->handleException($e);
         }
     }
 
@@ -72,6 +76,26 @@ class HttpErrorMiddleware implements MiddlewareInterface
         $responseData = [
             'code' => $e->getCode(),
             'path' => $e->getRequest()->getUri()->getPath(),
+            'message' => $e->getMessage()
+        ];
+
+        $response->getBody()
+            ->write(json_encode($responseData));
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus($e->getCode(), $e->getMessage());
+    }
+
+    /**
+     * @param Throwable $e
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    private function handleException(Throwable $e): ResponseInterface
+    {
+        $response = new Response();
+        $responseData = [
+            'code' => $e->getCode(),
             'message' => $e->getMessage()
         ];
 
