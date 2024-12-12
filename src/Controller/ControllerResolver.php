@@ -16,9 +16,25 @@ use Slim\Middleware\BodyParsingMiddleware;
 use Slim\Middleware\ErrorMiddleware;
 use Slim\Middleware\RoutingMiddleware;
 
+use function class_exists;
 use function is_a;
 use function is_array;
 use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Route::class);
+class_exists(ControllerInterface::class);
+class_exists(ResponseInterface::class);
+class_exists(ServerRequestInterface::class);
+class_exists(MiddlewareInterface::class);
+class_exists(LoggerInterface::class);
+class_exists(RouteCollectorProxy::class);
+class_exists(RouteCollectorProxyInterface::class);
+class_exists(BodyParsingMiddleware::class);
+class_exists(ErrorMiddleware::class);
+class_exists(RoutingMiddleware::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
