@@ -8,9 +8,16 @@ use Schnell\Config\Ast\AstInterface;
 use Schnell\Config\Ast\Node\NodeTypes as AstNodeTypes;
 
 use function array_merge_recursive;
+use function class_exists;
 use function preg_split;
 
 use const PREG_SPLIT_NO_EMPTY;
+
+// help opcache.preload discover always needed symbols
+// phpcs:disable
+class_exists(AstInterface::class);
+class_exists(AstNodeTypes::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
