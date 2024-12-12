@@ -15,9 +15,24 @@ use Schnell\Config\Node\Str;
 use Schnell\Config\Node\NodeInterface;
 use Schnell\Config\Node\NodeTypes;
 
+use function class_exists;
 use function intval;
 use function is_numeric;
 use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(ConfigLexerException::class);
+class_exists(Assign::class);
+class_exists(ArrayNode::class);
+class_exists(Block::class);
+class_exists(Boolean::class);
+class_exists(Identifier::class);
+class_exists(Integer::class);
+class_exists(Str::class);
+class_exists(NodeInterface::class);
+class_exists(NodeTypes::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
