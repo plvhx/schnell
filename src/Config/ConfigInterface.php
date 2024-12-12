@@ -6,6 +6,13 @@ namespace Schnell\Config;
 
 use Schnell\Config\Ast\AstInterface;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(AstInterface::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
