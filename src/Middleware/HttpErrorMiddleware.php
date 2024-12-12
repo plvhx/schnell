@@ -95,7 +95,7 @@ class HttpErrorMiddleware implements MiddlewareInterface
     {
         $response = new Response();
         $responseData = [
-            'code' => $e->getCode(),
+            'code' => 500,
             'message' => $e->getMessage()
         ];
 
@@ -104,6 +104,6 @@ class HttpErrorMiddleware implements MiddlewareInterface
 
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus($e->getCode(), $e->getMessage());
+            ->withStatus(500, $e->getMessage());
     }
 }
