@@ -1,6 +1,6 @@
 <?php
 
-namespace Schnell\Entity\Hydrator;
+namespace Schnell\Hydrator;
 
 use ReflectionClass;
 use ReflectionProperty;
