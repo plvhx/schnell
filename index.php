@@ -47,6 +47,8 @@ $controllerResolver->addRoutingMiddleware();
 $controllerResolver->add(new HttpErrorMiddleware($controllerPool));
 $controllerResolver->resolve($request);
 
+registerShutdownHandler($request, shutdownHandlerCallback($request));
+
 $kernel = new Kernel($config, $container, $controllerResolver);
 $kernel->addExtension(new DoctrineBridge(), getcwd());
 $kernel->addExtension(new MapperBridge(), getcwd());
