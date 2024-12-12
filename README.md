@@ -20,7 +20,7 @@ All declared controller must be:
 - route invokable method must be annotated with ```Schnell\Attribute\Route``` class
 - route invokable method must return ```Psr\Http\Message\ResponseInterface```
 
-Below is an example:
+Here is an example:
 
 ```php
 <?php
@@ -45,6 +45,54 @@ class FooController extends AbstractController
     ): ResponseInterface {
         $response->getBody()->write('Hello, World!');
         return $response->withHeader('Content-Type', 'text/plain');
+    }
+}
+```
+
+#### Creating an entity
+
+All declared entity must be:
+- must extend ```Schnell\Entity\AbstractEntity```
+- class entity property must be annotated with anything under namespace ```Doctrine\ORM\Mapping```
+
+Here is an example:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Schnell\Api\Entity;
+
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Schnell\Entity\AbstractEntity;
+
+#[Entity, Table(name: 'users')]
+class User extends AbstractEntity
+{
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
+    private $id;
+
+    #[Column(type: 'string', nullable: false)]
+    private $name;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getName(); string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }
 ```
