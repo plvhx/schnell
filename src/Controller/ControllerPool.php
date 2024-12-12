@@ -11,10 +11,20 @@ use Schnell\Container;
 use Schnell\Config\ConfigInterface;
 
 use function array_map;
+use function class_exists;
 use function basename;
 use function glob;
 use function preg_match;
 use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(ReflectionClass::class);
+class_exists(SplObjectStorage::class);
+class_exists(Route::class);
+class_exists(Container::class);
+class_exists(ConfigInterface::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
