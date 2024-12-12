@@ -12,6 +12,19 @@ use Schnell\Exception\ExtensionException;
 use Schnell\Mapper\Mapper;
 use Schnell\Mapper\MapperInterface;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(EntityManagerInterface::class);
+class_exists(ContainerInterface::class);
+class_exists(AbstractBridge::class);
+class_exists(ConfigInterface::class);
+class_exists(ExtensionException::class);
+class_exists(Mapper::class);
+class_exists(MapperInterface::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
