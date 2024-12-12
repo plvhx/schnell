@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Schnell\Entity\Hydrator;
+namespace Schnell\Hydrator;
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
