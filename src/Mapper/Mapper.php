@@ -7,7 +7,8 @@ namespace Schnell\Mapper;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\RequestInterface;
-use Schnell\Entity\Hydrator\HydratorInterface;
+use Schnell\Hydrator\HydratorInterface;
+use Schnell\Paginator\PaginatorInterface;
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -33,6 +34,11 @@ final class Mapper implements MapperInterface
      * @var Schnell\Hydrator\HydratorInterface
      */
     private $hydrator;
+
+    /**
+     * @var Schnell\Paginator\PaginatorInterface
+     */
+    private $paginator;
 
     /**
      * @param Doctrine\ORM\EntityManagerInterface $entityManager
