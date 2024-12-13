@@ -30,8 +30,6 @@ class_exists(Boolean::class);
 class_exists(Identifier::class);
 class_exists(Integer::class);
 class_exists(Str::class);
-class_exists(NodeInterface::class);
-class_exists(NodeTypes::class);
 // phpcs:enable
 
 /**

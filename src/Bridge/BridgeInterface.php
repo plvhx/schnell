@@ -7,14 +7,6 @@ namespace Schnell\Bridge;
 use Schnell\ContainerInterface;
 use Schnell\Config\ConfigInterface;
 
-use function class_exists;
-
-// help opcache.preload discover always-needed symbols
-// phpcs:disable
-class_exists(ContainerInterface::class);
-class_exists(ConfigInterface::class);
-// phpcs:enable
-
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */

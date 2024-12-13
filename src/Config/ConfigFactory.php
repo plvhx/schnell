@@ -6,15 +6,9 @@ namespace Schnell\Config;
 
 use Schnell\Exception\ConfigException;
 
-use function class_exists;
 use function file_get_contents;
 use function in_array;
 use function sprintf;
-
-// help opcache.preload discover always-needed symbols
-// phpcs:disable
-class_exists(ConfigException::class);
-// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>

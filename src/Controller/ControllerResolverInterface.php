@@ -17,11 +17,6 @@ use function class_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
-class_exists(ServerRequestInterface::class);
-class_exists(MiddlewareInterface::class);
-class_exists(RequestHandlerInterface::class);
-class_exists(LoggerInterface::class);
-class_exists(RouteCollectorProxyInterface::class);
 class_exists(BodyParsingMiddleware::class);
 class_exists(ErrorMiddleware::class);
 class_exists(RoutingMiddleware::class);

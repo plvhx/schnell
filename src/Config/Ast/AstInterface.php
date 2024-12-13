@@ -6,13 +6,6 @@ namespace Schnell\Config\Ast;
 
 use Schnell\Config\Ast\Visitor\VisitorInterface;
 
-use function class_exists;
-
-// help opcache.preload discover always-needed symbols
-// phpcs:disable
-class_exists(VisitorInterface::class);
-// phpcs:enable
-
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */

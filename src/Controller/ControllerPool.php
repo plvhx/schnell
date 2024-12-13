@@ -23,7 +23,6 @@ class_exists(ReflectionClass::class);
 class_exists(SplObjectStorage::class);
 class_exists(Route::class);
 class_exists(Container::class);
-class_exists(ConfigInterface::class);
 // phpcs:enable
 
 /**

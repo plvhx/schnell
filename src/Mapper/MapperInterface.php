@@ -12,16 +12,10 @@ use Schnell\Hydrator\HydratorInterface;
 use Schnell\Paginator\PageInterface;
 
 use function class_exists;
-use function interface_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
 class_exists(AbstractQuery::class);
-interface_exists(EntityManagerInterface::class);
-interface_exists(RequestInterface::class);
-interface_exists(EntityInterface::class);
-interface_exists(HydratorInterface::class);
-interface_exists(PageInterface::class);
 // phpcs:enable
 
 /**

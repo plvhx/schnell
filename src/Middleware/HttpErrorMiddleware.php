@@ -18,10 +18,6 @@ use function json_encode;
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
 class_exists(Throwable::class);
-class_exists(ResponseInterface::class);
-class_exists(ServerRequestInterface::class);
-class_exists(RequestHandlerInterface::class);
-class_exists(ControllerPoolInterface::class);
 class_exists(HttpNotFoundException::class);
 class_exists(Response::class);
 // phpcs:enable

@@ -16,9 +16,6 @@ use function class_exists;
 // phpcs:disable
 class_exists(SplObjectStorage::class);
 class_exists(Container::class);
-class_exists(ConfigInterface::class);
-class_exists(RequestInterface::class);
-class_exists(ResponseInterface::class);
 // phpcs:enable
 
 /**

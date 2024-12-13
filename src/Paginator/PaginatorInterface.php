@@ -6,13 +6,6 @@ namespace Schnell\Paginator;
 
 use Psr\Http\Message\RequestInterface;
 
-use function interface_exists;
-
-// help opcache.preload discover always-needed symbols
-// phpcs:disable
-interface_exists(RequestInterface::class);
-// phpcs:enable
-
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */

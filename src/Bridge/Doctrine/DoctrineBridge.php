@@ -22,11 +22,8 @@ use function sprintf;
 // phpcs:disable
 class_exists(DriverManager::class);
 class_exists(EntityManager::class);
-class_exists(EntityManagerInterface::class);
 class_exists(ORMSetup::class);
-class_exists(ContainerInterface::class);
 class_exists(AbstractBridge::class);
-class_exists(ConfigInterface::class);
 class_exists(ArrayAdapter::class);
 class_exists(FilesystemAdapter::class);
 // phpcs:enable

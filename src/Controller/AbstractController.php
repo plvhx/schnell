@@ -11,14 +11,10 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 use function class_exists;
-use function interface_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
-class_exists(ContainerInterface::class);
 class_exists(Hateoas::class);
-interface_exists(PageInterface::class);
-class_exists(ResponseInterface::class);
 // phpcs:enable
 
 /**

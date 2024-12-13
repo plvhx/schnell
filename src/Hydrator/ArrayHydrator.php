@@ -14,7 +14,6 @@ use function ucfirst;
 // phpcs:disable
 class_exists(ReflectionClass::class);
 class_exists(ReflectionProperty::class);
-class_exists(EntityInterface::class);
 // phpcs:enable
 
 class ArrayHydrator implements HydratorInterface

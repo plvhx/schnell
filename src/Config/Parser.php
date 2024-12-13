@@ -21,9 +21,6 @@ use function class_exists;
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
 class_exists(Ast::class);
-class_exists(AstInterface::class);
-class_exists(NodeInterface::class);
-class_exists(NodeTypes::class);
 class_exists(AstBlockNode::class);
 class_exists(AstPropertyNode::class);
 class_exists(AstRootNode::class);
