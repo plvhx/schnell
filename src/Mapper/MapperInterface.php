@@ -7,16 +7,21 @@ namespace Schnell\Mapper;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\RequestInterface;
+use Schnell\Entity\EntityInterface;
 use Schnell\Hydrator\HydratorInterface;
+use Schnell\Paginator\PageInterface;
 
 use function class_exists;
+use function interface_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
 class_exists(AbstractQuery::class);
-class_exists(EntityManagerInterface::class);
-class_exists(RequestInterface::class);
-class_exists(HydratorInterface::class);
+interface_exists(EntityManagerInterface::class);
+interface_exists(RequestInterface::class);
+interface_exists(EntityInterface::class);
+interface_exists(HydratorInterface::class);
+interface_exists(PageInterface::class);
 // phpcs:enable
 
 /**
@@ -92,8 +97,37 @@ interface MapperInterface
     public function withHydrator(HydratorInterface $hydrator): MapperInterface;
 
     /**
-     * @param string $entityClass
+     * @return Schnell\Paginator\PageInterface
+     */
+    public function getPage(): PageInterface;
+
+    /**
+     * @param Schnell\Paginator\PageInterface $page
+     * @return void
+     */
+    public function setPage(PageInterface $page): void;
+
+    /**
+     * @param Schnell\Paginator\PageInterface $page
+     * @return Schnell\Mapper\MapperInterface
+     */
+    public function withPage(PageInterface $page): MapperInterface;
+
+    /**
+     * @param Schnell\Entity\EntityInterface $entity
      * @return array
      */
-    public function all(string $entityClass): array;
+    public function all(EntityInterface $entity): array;
+
+    /**
+     * @param Schnell\Entity\EntityInterface $entity
+     * @return array
+     */
+    public function paginate(EntityInterface $entity): array;
+
+    /**
+     * @param Schnell\Entity\EntityInterface $entity
+     * @return int
+     */
+    public function count(EntityInterface $entity): int;
 }

@@ -9,4 +9,8 @@ namespace Schnell\Entity;
  */
 interface EntityInterface
 {
+    /**
+     * @return string
+     */
+    public function getQueryBuilderAlias(): string;
 }

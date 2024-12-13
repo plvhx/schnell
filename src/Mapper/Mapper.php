@@ -7,18 +7,22 @@ namespace Schnell\Mapper;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\RequestInterface;
+use Schnell\Entity\EntityInterface;
 use Schnell\Hydrator\HydratorInterface;
-use Schnell\Paginator\PaginatorInterface;
+use Schnell\Paginator\PageInterface;
 
 use function class_exists;
+use function get_class;
+use function interface_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
 class_exists(AbstractQuery::class);
-class_exists(EntityManagerInterface::class);
-class_exists(RequestInterface::class);
-class_exists(HydratorInterface::class);
-class_exists(PaginatorInterface::class);
+interface_exists(EntityManagerInterface::class);
+interface_exists(RequestInterface::class);
+interface_exists(EntityInterface::class);
+interface_exists(HydratorInterface::class);
+interface_exists(PageInterface::class);
 // phpcs:enable
 
 /**
@@ -47,9 +51,9 @@ final class Mapper implements MapperInterface
     private $hydrator;
 
     /**
-     * @var Schnell\Paginator\PaginatorInterface
+     * @var Schnell\Paginator\PageInterface
      */
-    private $paginator;
+    private $page;
 
     /**
      * @param Doctrine\ORM\EntityManagerInterface $entityManager
@@ -167,15 +171,75 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
-    public function all(string $entityClass): array
+    public function getPage(): PageInterface
+    {
+        return $this->page;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPage(PageInterface $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function withPage(PageInterface $page): MapperInterface
+    {
+        $ret = clone $this;
+        $ret->setPage($page);
+        return $ret;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function all(EntityInterface $entity): array
     {
         $hydrator = $this->getHydrator();
         $result = $this->getEntityManager()
-            ->getRepository($entityClass)
+            ->getRepository(get_class($entity))
             ->findAll();
 
         return $hydrator === null
             ? $result
             : $hydrator->hydrate($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function paginate(EntityInterface $entity): array
+    {
+        if (
+            $this->getPage() === null ||
+            $this->getHydrator() === null
+        ) {
+            return [];
+        }
+
+        $hydrator = $this->getHydrator();
+        $result = $this->getEntityManager()
+            ->getRepository(get_class($entity))
+            ->createQueryBuilder($entity->getQueryBuilderAlias())
+            ->setFirstResult($this->getPage()->getOffset())
+            ->setMaxResults($this->getPage()->getPerPage())
+            ->getQuery()
+            ->getResult();
+
+        return $hydrator->hydrate($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count(EntityInterface $entity): int
+    {
+        return $this->getEntityManager()
+            ->getRepository(get_class($entity))
+            ->count();
     }
 }

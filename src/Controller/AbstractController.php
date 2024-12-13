@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace Schnell\Controller;
 
 use Schnell\ContainerInterface;
+use Schnell\Hateoas\Hateoas;
+use Schnell\Paginator\PageInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 use function class_exists;
+use function interface_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
 class_exists(ContainerInterface::class);
+class_exists(Hateoas::class);
+interface_exists(PageInterface::class);
 class_exists(ResponseInterface::class);
 // phpcs:enable
 
@@ -60,5 +66,20 @@ abstract class AbstractController implements ControllerInterface
         $response->getBody()
             ->write(json_encode($data));
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hateoas(
+        RequestInterface $request,
+        ResponseInterface $response,
+        PageInterface $page,
+        array $data
+    ): ResponseInterface {
+        return $this->json(
+            $response,
+            (new Hateoas($data, $page, $request))->generate()
+        );
     }
 }

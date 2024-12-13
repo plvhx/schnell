@@ -9,4 +9,8 @@ namespace Schnell\Entity;
  */
 abstract class AbstractEntity implements EntityInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function getQueryBuilderAlias(): string;
 }
