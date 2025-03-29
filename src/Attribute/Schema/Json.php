@@ -45,7 +45,7 @@ class Json implements AttributeInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getIdentifier(): string
     {
