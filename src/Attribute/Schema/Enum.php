@@ -45,7 +45,7 @@ class Enum implements AttributeInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getIdentifier(): string
     {
