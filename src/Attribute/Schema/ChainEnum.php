@@ -69,7 +69,7 @@ class ChainEnum implements AttributeInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getIdentifier(): string
     {
